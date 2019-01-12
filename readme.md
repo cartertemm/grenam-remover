@@ -59,7 +59,7 @@ Assuming no errors occurred, remover.exe should now be located in the dist direc
 
 ## Contributing/issues
 
-Have a feature suggestion? Spot a bug? Use the (repositories issue tracker)[http://github.com/cartertemm/grenam-remover/issues)
+Have a feature suggestion? Spot a bug? Use the [repositories issue tracker](http://github.com/cartertemm/grenam-remover/issues)
 If you'd rather not deal with github, get in contact and I'll see what I can do to help.
 
 ## Contact
