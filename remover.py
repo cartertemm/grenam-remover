@@ -1,3 +1,7 @@
+#Copyright (c) 2019 Carter Temm
+#this file is covered by the MIT license
+#see license for more info
+
 #the size of the grenam binary, paint.exe
 #seems to be the same on every strain I've seen, although I'm sure there's also another one lurking around somewhere
 #change this as needed
