@@ -9,13 +9,13 @@ Win32/Grenam, informally referred to as the V-Virus, is known for recursively en
 * user runs infected executable, game.exe
 * grenam is executed
 * Mutex is created to prevent multiple instances/operations from running at one time.
-* game.exe recursively enumerates through writable, uninfected executables starting at the root of C:. This means anything accessible, including attached volumes.
+* game.exe recursively enumerates through writeable, uninfected executables starting at the root of C:. This means anything accessible, including attached volumes.
 * Once a file is found, the virus renames a working copy to v<filename>.exe, setting the windows FILE_ATTRIBUTE_SYSTEM and FILE_ATTRIBUTE_READONLY attributes to circumvent detection. To make it less obvious, the original program's icon is included if existent. In the case that none is found, a blank icon v<filename>.ico is created.
 * According to a page on MSDN, the virus only runs the original exe after infecting 123 files. This won't take very long.
 
 ## Why?
 
-Although a run through virus total yielded quite a promicing detection rating, 57 / 69, most anti-virus programs simply delete infected files without proper cleanup. This leaves the users system still worse for wear. For example, desktop and start menu shortcuts remain inoperable. Grenam remover tries it's best to not only eliminate the threat but repair it's effects. The program does it's absolute best to eliminate false positives by only deleting files that correspond to the v<filename> pattern and have an approximate file size. I've yet to see false positives, even across multiple machines.
+Although a run through virus total yielded quite a promising detection rating, 57 / 69, most anti-virus programs simply delete infected files without proper cleanup. This leaves the users system still worse for wear. For example, desktop and start menu shortcuts remain inoperable. Grenam remover tries it's best to not only eliminate the threat but repair it's effects. The program does it's absolute best to eliminate false positives by only deleting files that correspond to the v<filename> pattern and have an approximate file size. I've yet to see false positives, even across multiple machines.
 
 ## Usage
 
@@ -36,12 +36,12 @@ optional arguments:
   -h, --help            show this help message and exit
   --dry                 Dry run. Only display output, no deletion
   -f FILE, --file FILE  filename to which a list of removed files will be
-                        written. If this option is omited, they will be
+                        written. If this option is omitted, they will be
                         printed
   -p PATH, --path PATH  path to scan, default is c:\
 ```
 
-Again, I've yet to see any false positives, and the case of one occuring seems quite rare. But it might be a good idea to first run with the --dry option if only to know what all is about to be sent into the void.
+Again, I've yet to see any false positives, and the case of one occurring seems quite rare. But it might be a good idea to first run with the --dry option if only to know what all is about to be sent into the void.
 
 ## building
 
@@ -55,7 +55,7 @@ Now from commandline, simply run:
 pyinstaller --onefile remover.py
 ```
 
-Assuming no errors occured, remover.exe should now be located in the dist directory. to make sure it's unable to be touched by our old friend, change the extension of .exe to .com.
+Assuming no errors occurred, remover.exe should now be located in the dist directory. to make sure it's unable to be touched by our old friend, change the extension of .exe to .com.
 
 ## Contributing/issues
 
