@@ -25,7 +25,7 @@ Grenam only searches for *.exe, leaving out other executable formats such as .co
 
 ### Executing
 
-Open a command window in the directory where this program resides.
+Open a command window in the directory where this program resides. It might be a good idea to run as administrator to make sure the program has adequate permissions.
 
 ```
 usage: remover.py [-h] [--dry] [-f FILE] [-p PATH]

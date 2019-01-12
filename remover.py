@@ -20,6 +20,13 @@ import argparse
 import ctypes
 
 
+def is_admin():
+	"""checks to see if the program is being run as an administrator"""
+	try:
+		return ctypes.windll.shell32.IsUserAnAdmin()
+	except:
+		return 0
+
 def cmd(command):
 	"""runs a command and returns stdout and stderr"""
 	output=subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -54,9 +61,7 @@ def scan():
 
 def is_grenam_size(filename):
 	"""checks to see if an executable is grenam by size alone"""
-	f=open(filename, "rb")
-	size=len(f.read())
-	f.close()
+	size=int(os.stat(filename).st_size)
 	if size==EXE_SIZE:
 		return True
 	return False
@@ -70,6 +75,8 @@ args=parser.parse_args()
 
 print("grenam removal tool v 1.0")
 print("Written by Carter Temm <http://github.com/cartertemm/grenam-remover>")
+if not is_admin():
+	print("Warning! For optimal performence and quality, make sure to run this program as admin")
 print("scanning for virus...")
 if not os.path.exists(args.path):
 	print("error, non-existent path provided")
