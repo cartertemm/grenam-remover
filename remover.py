@@ -2,12 +2,12 @@
 #this file is covered by the MIT license
 #see license for more info
 
-#the size of the grenam binary, paint.exe
-#seems to be the same on every strain I've seen, although I'm sure there's also another one lurking around somewhere
+#sizes of grenam binaries, paint.exe
+#A couple strains seem to be lurking around, just add to the list
 #change this as needed
 #enable system and hidden files, then browse to %appdata%\paint.exe. Click properties, use object nav to find size, and enter it here
 
-EXE_SIZE=844288
+EXE_SIZES=[844288, 849920]
 
 import os
 import fnmatch
@@ -62,7 +62,7 @@ def scan():
 def is_grenam_size(filename):
 	"""checks to see if an executable is grenam by size alone"""
 	size=int(os.stat(filename).st_size)
-	if size==EXE_SIZE:
+	if size in EXE_SIZES:
 		return True
 	return False
 
