@@ -4,14 +4,14 @@ Easily remove and revert damage caused by the Win32/Grenam malware.
 
 ## huh?
 
-Win32/Grenam, informally referred to as the V-Virus, is known for recursively enumerating through owned .exe files. It replaces executables with itself and thus makes  them inoperable. The threat is most effective in the context of a shared folder, where users mindlessly click on and run executables without checking attributes. Infection looks a little something like:
+Win32/Grenam, informally referred to as the V-Virus, is known for recursively enumerating through owned .exe files. It replaces executables with itself and thus makes them inoperable. The threat is most effective in the context of a shared folder, where users mindlessly click on and run executables without checking attributes. Infection looks a little something like:
 
-* user runs infected executable, game.exe
-* grenam is executed
-* Mutex is created to prevent multiple instances/operations from running at one time.
-* game.exe recursively enumerates through writeable, uninfected executables starting at the root of C:. This means anything accessible, including attached volumes.
-* Once a file is found, the virus renames a working copy to v<filename>.exe, setting the windows FILE_ATTRIBUTE_SYSTEM and FILE_ATTRIBUTE_READONLY attributes to circumvent detection. To make it less obvious, the original program's icon is included if existent. In the case that none is found, a blank icon v<filename>.ico is created.
-* According to a page on MSDN, the virus only runs the original exe after infecting 123 files. This won't take very long.
+- user runs infected executable, game.exe
+- grenam is executed
+- Mutex is created to prevent multiple instances/operations from running at one time.
+- game.exe recursively enumerates through writeable, uninfected executables starting at the root of C:. This means anything accessible, including attached volumes.
+- Once a file is found, the virus renames a working copy to v<filename>.exe, setting the windows FILE_ATTRIBUTE_SYSTEM and FILE_ATTRIBUTE_READONLY attributes to circumvent detection. To make it less obvious, the original program's icon is included if existent. In the case that none is found, a blank icon v<filename>.ico is created.
+- According to a page on MSDN, the virus only runs the original exe after infecting 123 files. This won't take very long.
 
 ## Why?
 
@@ -34,7 +34,6 @@ easily remove the Win32/Grenam.A malware
 
 optional arguments:
   -h, --help            show this help message and exit
-  --dry                 Dry run. Only display output, no deletion
   -f FILE, --file FILE  filename to which a list of removed files will be
                         written. If this option is omitted, they will be
                         printed
@@ -56,6 +55,25 @@ pyinstaller --onefile remover.py
 ```
 
 Assuming no errors occurred, remover.exe should now be located in the dist directory. to make sure it's unable to be touched by our old friend, change the extension of .exe to .com.
+
+## Antivirus Guidance & Troubleshooting
+
+### 1. Handling Files Already Quarantined by Antivirus
+If Windows Defender or a third-party antivirus has already deleted or quarantined `vgame.exe`, Python code cannot recreate the original file because the clean game binary data was wiped from disk.
+
+To fix this issue:
+- Open **Windows Security** -> **Virus & threat protection** -> **Protection history**.
+- Find the quarantined items corresponding to your game folder (listed as `v*.exe` or `Win32/Grenam`).
+- Select **Actions** -> **Restore**. Once restored, `remover.py` can finish un-hiding and renaming the original file.
+
+### 2. Antivirus Management During Cleanup
+You do not need to permanently turn off your antivirus, but disabling Real-Time Protection temporarily (or adding a folder exclusion) while running the cleanup pass is strongly recommended.
+
+- **Why?** When `remover.py` un-hides `vgame.exe` and deletes `game.exe`, Windows Defender may detect the sudden file attribute change and lock or quarantine `vgame.exe` mid-process, causing a race condition or file permission error.
+- **Best Practice:**
+  1. Temporarily toggle off **Real-time protection** in Windows Security.
+  2. Run `python remover.py -p "C:\Path\To\GameFolder"`.
+  3. Turn **Real-time protection** back on.
 
 ## Contributing/issues
 
